@@ -7,6 +7,9 @@ const Login = () => {
       e.preventDefault()
       console.log("Email is", email)
       console.log("Password is", pass);
+
+      setEmail("")
+      setPass("")
   }
   return (
     <div className='flex h-screen w-screen items-center justify-center'>
