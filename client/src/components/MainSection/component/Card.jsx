@@ -11,20 +11,27 @@ const Card = ({ handleEdit, handleReRender, empData }) => {
   const [DropDown, setDropDown] = useState(false)
 
   
-  const handleDelete = async (id) => {
-    try {
-        const res = await fetch(`${baseURL}/employee/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        const data = await res.json();
-        handleReRender(data);
-    } catch (error) {
-        console.log(error);
+const handleDelete = async (id) => {
+  try {
+    const res = await fetch(`${baseURL}/employee/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error('Delete failed');
     }
+
+    const data = await res.text();
+    console.log(data);
+
+    handleReRender();
+  } catch (error) {
+    console.log(error);
   }
+};
   
 
   return (

@@ -1,134 +1,166 @@
-import React, { useState, useEffect } from 'react'
-import { useFormik } from 'formik'
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
 
-
-const baseURL = 'http://localhost:8000';
-
+const baseURL = 'http://localhost:5000';
 
 const EditModalDetails = ({ EmpById, setEditModal }) => {
-  
-  const { firstname, lastname, email, phone, job, dateOfJoining, image } = EmpById;
-  const [Loading, setLoading] = useState(false)
+  const [Loading, setLoading] = useState(false);
 
-  const handleEdit = async () => {
-    setLoading(true)
+  const handleEdit = async (values) => {
+    setLoading(true);
+
     try {
-        const res = await fetch(`${baseURL}/employee/${EmpById._id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (!res.ok) {
-            throw new Error("Failed to fetch the data.")
-        }
-        const data = await res.json();
-        setLoading(false)
-        setEditModal(false)
-        console.log(res);
+      const res = await fetch(`${baseURL}/employee/${EmpById._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to update employee');
+      }
+
+      const data = await res.text();
+      console.log(data);
+
+      setLoading(false);
+      setEditModal(false);
     } catch (error) {
-        console.log(error);
+      console.log(error);
+      setLoading(false);
     }
-  }
+  };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-        firstname,
-        lastname,
-        email,
-        phone,
-        job,
-        dateOfJoining,
-        image,
+      firstname: EmpById.firstname || '',
+      lastname: EmpById.lastname || '',
+      email: EmpById.email || '',
+      phone: EmpById.phone || '',
+      job: EmpById.job || '',
+      dateOfJoining: EmpById.dateOfJoining || '',
+      image: EmpById.image || '',
     },
-    onSubmit: values => {
-        handleEdit(values)
-    }
-  })
-  console.log(formik.initialValues)
+    onSubmit: (values) => {
+      handleEdit(values);
+    },
+  });
 
-  
   return (
-    <div>
-        <form action="" onSubmit={formik.handleSubmit}>
-            <div>New Employee Details</div>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
+      <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
+        <h2 className="mb-4 text-2xl font-bold">Edit Employee</h2>
+
+        <form onSubmit={formik.handleSubmit}>
+          <div className="space-y-3">
             <div>
-                <div>
-                    <label htmlFor="">First Name</label>
-                        <input type="text" name='firstname' 
-                        required
-                        defaultValue={firstname}
-                        onChange={formik.handleChange}
-                        values={formik.values.firstname}
-                        />
-                </div>
-
-                <div>
-                    <label htmlFor="">Last Name</label>
-                        <input type="text" name='lastname' 
-                        required
-                        defaultValue={lastname}
-                        onChange={formik.handleChange}
-                        values={formik.values.lastname}
-                        />
-                </div>
-
-                <div>
-                    <label htmlFor="">Image</label>
-                        <input type="text" name='image' 
-                        required
-                        defaultValue={image}
-                        onChange={formik.handleChange}
-                        values={formik.values.image}
-                        />
-                </div>
-
-                <div>
-                    <label htmlFor="">Email Address</label>
-                        <input type="email" name='email' 
-                        required
-                        defaultValue={email}
-                        onChange={formik.handleChange}
-                        values={formik.values.email}
-                        />
-                </div>
-
-                <div>
-                    <label htmlFor="">Phone</label>
-                        <input type="text" name='email' 
-                        required
-                        defaultValue={phone}
-                        onChange={formik.handleChange}
-                        values={formik.values.phone}
-                        />
-                </div>
-                
-                <div>
-                    <label htmlFor="">Job Position</label>
-                        <input type="text" name='job' 
-                        required
-                        defaultValue={job}
-                        onChange={formik.handleChange}
-                        values={formik.values.job}
-                        />
-                </div>
-
-                <div>
-                    <label htmlFor="">Date Of Joining</label>
-                        <input type="date" name='dateofjoining' 
-                        required
-                        defaultValue={dateofjoining}
-                        onChange={formik.handleChange}
-                        values={formik.values.dateofjoining}
-                        />
-                </div>
+              <label>First Name</label>
+              <input
+                type="text"
+                name="firstname"
+                className="w-full p-2 border rounded"
+                onChange={formik.handleChange}
+                value={formik.values.firstname}
+                required
+              />
             </div>
+
             <div>
-                <button type='submit'>{Loading ? 'Edit' : 'Edit and Save'}</button>
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastname"
+                className="w-full p-2 border rounded"
+                onChange={formik.handleChange}
+                value={formik.values.lastname}
+                required
+              />
             </div>
+
+            <div>
+              <label>Image URL</label>
+              <input
+                type="text"
+                name="image"
+                className="w-full p-2 border rounded"
+                onChange={formik.handleChange}
+                value={formik.values.image}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                className="w-full p-2 border rounded"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Phone</label>
+              <input
+                type="text"
+                name="phone"
+                className="w-full p-2 border rounded"
+                onChange={formik.handleChange}
+                value={formik.values.phone}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Job Position</label>
+              <input
+                type="text"
+                name="job"
+                className="w-full p-2 border rounded"
+                onChange={formik.handleChange}
+                value={formik.values.job}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Date Of Joining</label>
+              <input
+                type="text"
+                name="dateOfJoining"
+                className="w-full p-2 border rounded"
+                onChange={formik.handleChange}
+                value={formik.values.dateOfJoining}
+                required
+              />
+            </div>
+
+            <div className="flex gap-3 mt-4">
+              <button
+                type="submit"
+                className="px-4 py-2 text-white bg-blue-600 rounded"
+              >
+                {Loading ? 'Updating...' : 'Update Employee'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setEditModal(false)}
+                className="px-4 py-2 text-white bg-gray-500 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </form>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditModalDetails
+export default EditModalDetails;
