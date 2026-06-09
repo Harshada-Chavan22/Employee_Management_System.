@@ -7,11 +7,18 @@ const router = express.Router();
 
 router.post('/', async(req, res) => {
     try {
+        console.log("BODY RECEIVED:", req.body);
+
         const employee = new Employees(req.body);
+
         await employee.save();
-        res.status(201).send(employee);
+
+        console.log("SAVED:", employee);
+
+        res.status(201).json(employee);
     } catch (error) {
-        res.status(500).send("Internal Server Error");
+        console.log("ERROR:", error);
+        res.status(500).send(error.message);
     }
 });
 
