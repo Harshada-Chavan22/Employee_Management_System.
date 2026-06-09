@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 
 const NavBar = () => {
   return (
@@ -9,14 +9,13 @@ const NavBar = () => {
           StaffSync
         </div>
       </div>
+
       <div className='flex-row items-center gap-8 p-2 text-lg font-medium md:flex'>
-        <>
-        <div className='flex'>
-              <div className='p-2 mr-2 text-black bg-white rounded-lg'>                
-                Dashboard
-              </div>
-        </div>
-        </>
+        <Link to="/dashboard">
+          <button className='p-2 mr-2 text-black bg-white rounded-lg cursor-pointer'>
+            Dashboard
+          </button>
+        </Link>
       </div>
     </div>
   )

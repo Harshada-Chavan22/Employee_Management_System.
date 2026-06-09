@@ -6,7 +6,7 @@ import { IoMdAdd } from 'react-icons/io'
 import React, { useState, useEffect } from 'react'
 
 
-const baseURL = 'http://localhost:8000';
+const baseURL = 'http://localhost:5000';
 
 
 const MainSection = ({ setEmployeeId }) => {
@@ -85,15 +85,28 @@ const MainSection = ({ setEmployeeId }) => {
         EditModal && <EditModalDetails setEditModal={setEditModal} EmpById={EmpById} />
     }
 
-    <main>
+    <main className="p-8">
         <div>
-            <div>People <span>{employees.length}</span></div>
+            <div className="mb-6 text-3xl font-bold">
+  People ({employees.length})
+</div>
             <div>
                 <div>
-                    <input type="text" placeholder='Search by name, email, designation...' onChange={handleSearch} />
+                    <input
+  type="text"
+  placeholder="Search Employee..."
+  onChange={handleSearch}
+  className="w-full p-3 border rounded-lg"
+/>
                     <BiSearch size={20} />
                 </div>
-                <button type="button" onClick={() => setShowModal(true)}><IoMdAdd size={20} color='#fffff' />Add Employee+</button>
+                <button
+  type="button"
+  onClick={() => setShowModal(true)}
+  className="px-5 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+>
+  Add Employee
+</button>
             </div>
 
             <div>
