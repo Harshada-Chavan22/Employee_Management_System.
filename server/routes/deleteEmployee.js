@@ -6,16 +6,22 @@ const router = express.Router();
 
 
 router.delete("/:id", async(req, res) => {
+    console.log("DELETE ROUTE CALLED:", req.params.id);
+
     try {
         const employee = await Employees.findByIdAndDelete(req.params.id);
+
         if (!employee) {
             return res.status(404).send("Employee not found!");
         }
+
+        console.log("DELETED:", employee);
+
         res.send("Employee deleted!");
     } catch (error) {
         console.error(error);
     }
-})
+});
 
 
 export { router as deleteEmployee };

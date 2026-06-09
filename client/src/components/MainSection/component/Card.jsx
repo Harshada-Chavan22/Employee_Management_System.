@@ -21,11 +21,8 @@ const handleDelete = async (id) => {
     });
 
     if (!res.ok) {
-      throw new Error('Delete failed');
+      throw new Error("Delete failed");
     }
-
-    const data = await res.text();
-    console.log(data);
 
     handleReRender();
   } catch (error) {

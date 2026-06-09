@@ -67,9 +67,9 @@ const MainSection = ({ setEmployeeId }) => {
     setEditModal(true)
   }
 
-  const handleReRender = async () => {
-    setReRender(true)
-  }
+const handleReRender = () => {
+  getAllEmployee();
+}
 
   useEffect(() => {
     getAllEmployee()
