@@ -22,8 +22,7 @@ const EditModalDetails = ({ EmpById, setEditModal }) => {
         throw new Error('Failed to update employee');
       }
 
-      const data = await res.text();
-      console.log(data);
+      await res.text();
 
       setLoading(false);
       setEditModal(false);
@@ -50,113 +49,159 @@ const EditModalDetails = ({ EmpById, setEditModal }) => {
   });
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="mb-4 text-2xl font-bold">Edit Employee</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-3xl p-6 mx-4 bg-white rounded-xl shadow-2xl">
+        
+        <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
+          Edit Employee
+        </h2>
 
         <form onSubmit={formik.handleSubmit}>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+
             <div>
-              <label>First Name</label>
+              <label className="block mb-1 font-medium text-gray-700">
+                First Name
+              </label>
               <input
                 type="text"
                 name="firstname"
-                className="w-full p-2 border rounded"
-                onChange={formik.handleChange}
                 value={formik.values.firstname}
+                onChange={formik.handleChange}
                 required
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
 
             <div>
-              <label>Last Name</label>
+              <label className="block mb-1 font-medium text-gray-700">
+                Last Name
+              </label>
               <input
                 type="text"
                 name="lastname"
-                className="w-full p-2 border rounded"
-                onChange={formik.handleChange}
                 value={formik.values.lastname}
-                required
-              />
-            </div>
-
-            <div>
-              <label>Image URL</label>
-              <input
-                type="text"
-                name="image"
-                className="w-full p-2 border rounded"
                 onChange={formik.handleChange}
-                value={formik.values.image}
                 required
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
 
             <div>
-              <label>Email</label>
+              <label className="block mb-1 font-medium text-gray-700">
+                Email Address
+              </label>
               <input
                 type="email"
                 name="email"
-                className="w-full p-2 border rounded"
-                onChange={formik.handleChange}
                 value={formik.values.email}
+                onChange={formik.handleChange}
                 required
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
 
             <div>
-              <label>Phone</label>
+              <label className="block mb-1 font-medium text-gray-700">
+                Phone Number
+              </label>
               <input
                 type="text"
                 name="phone"
-                className="w-full p-2 border rounded"
-                onChange={formik.handleChange}
                 value={formik.values.phone}
+                onChange={formik.handleChange}
                 required
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
 
             <div>
-              <label>Job Position</label>
+              <label className="block mb-1 font-medium text-gray-700">
+                Job Position
+              </label>
               <input
                 type="text"
                 name="job"
-                className="w-full p-2 border rounded"
-                onChange={formik.handleChange}
                 value={formik.values.job}
+                onChange={formik.handleChange}
                 required
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
 
             <div>
-              <label>Date Of Joining</label>
+              <label className="block mb-1 font-medium text-gray-700">
+                Date Of Joining
+              </label>
               <input
                 type="text"
                 name="dateOfJoining"
-                className="w-full p-2 border rounded"
-                onChange={formik.handleChange}
                 value={formik.values.dateOfJoining}
+                onChange={formik.handleChange}
                 required
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
 
-            <div className="flex gap-3 mt-4">
-              <button
-                type="submit"
-                className="px-4 py-2 text-white bg-blue-600 rounded"
-              >
-                {Loading ? 'Updating...' : 'Update Employee'}
-              </button>
+            <div className="md:col-span-2">
+  <label className="block mb-2 font-medium text-gray-700">
+    Employee Photo
+  </label>
 
-              <button
-                type="button"
-                onClick={() => setEditModal(false)}
-                className="px-4 py-2 text-white bg-gray-500 rounded"
-              >
-                Cancel
-              </button>
-            </div>
+  <input
+    type="file"
+    accept="image/*"
+    className="w-full p-3 border rounded-lg"
+    onChange={(e) => {
+      const file = e.target.files[0];
+
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        formik.setFieldValue("image", reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }}
+  />
+
+  {formik.values.image ? (
+    <img
+      src={formik.values.image}
+      alt="Preview"
+      className="object-cover w-32 h-32 mt-4 border rounded-lg"
+    />
+  ) : (
+    <p className="mt-2 text-sm text-gray-500">
+      No image selected
+    </p>
+  )}
+</div>
+<p className="text-red-500">
+  {formik.values.image ? "Image Loaded" : "Image Not Loaded"}
+</p>
+
           </div>
+
+          <div className="flex gap-3 mt-6">
+            <button
+              type="submit"
+              className="flex-1 py-3 text-white bg-green-600 rounded-lg hover:bg-green-700"
+            >
+              {Loading ? 'Updating...' : 'Update Employee'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setEditModal(false)}
+              className="flex-1 py-3 text-white bg-gray-500 rounded-lg hover:bg-gray-600"
+            >
+              Cancel
+            </button>
+          </div>
+
         </form>
       </div>
     </div>

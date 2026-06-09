@@ -47,10 +47,10 @@ const LeftBar = ({ employeeId }) => {
 
     <div className="flex flex-col items-center">
       <img
-        src={EmpById.image || "https://via.placeholder.com/150"}
-        alt=""
-        className="object-cover w-32 h-32 mb-4 rounded-full"
-      />
+  src={EmpById.image}
+  alt="Employee"
+  className="object-cover w-32 h-32 mx-auto rounded-full border-4 border-blue-500"
+/>
 
       <h2 className="text-xl font-bold">
         {EmpById.firstname} {EmpById.lastname}
@@ -59,13 +59,21 @@ const LeftBar = ({ employeeId }) => {
       <p className="text-gray-500">{EmpById.email}</p>
     </div>
 
-    <div className="mt-6 space-y-3">
-      <p><strong>Phone:</strong> {EmpById.phone}</p>
-      <p><strong>Job:</strong> {EmpById.job}</p>
-      <p><strong>Date Joined:</strong> {EmpById.dateOfJoining}</p>
+    <div className="mt-8 space-y-3">
+      <div className="p-3 bg-gray-100 rounded-lg">
+        <strong>Phone:</strong> {EmpById.phone}
+      </div>
+
+      <div className="p-3 bg-gray-100 rounded-lg">
+        <strong>Job:</strong> {EmpById.job}
+      </div>
+
+      <div className="p-3 bg-gray-100 rounded-lg">
+        <strong>Date Joined:</strong> {EmpById.dateOfJoining}
+      </div>
     </div>
   </div>
-)
+);
 }
 
 export default LeftBar

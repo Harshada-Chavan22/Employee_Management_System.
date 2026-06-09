@@ -32,7 +32,7 @@ const handleDelete = async (id) => {
   
 
   return (
-  <div className="relative p-4 mb-4 transition bg-white shadow-md rounded-xl hover:shadow-lg">
+  <div className="relative p-4 mb-4 transition-all bg-white shadow-md cursor-pointer rounded-xl hover:shadow-xl">
     
     <div className="absolute top-4 right-4">
       <BsThreeDotsVertical
@@ -43,7 +43,7 @@ const handleDelete = async (id) => {
 
       {DropDown && (
         <ul
-          className="absolute right-0 z-10 bg-white border rounded shadow"
+          className="absolute right-0 z-10 w-32 bg-white border rounded-lg shadow-lg"
           onMouseLeave={() => setDropDown(false)}
         >
           <li
@@ -65,10 +65,10 @@ const handleDelete = async (id) => {
 
     <div className="flex items-center gap-4">
       <img
-        src={image || "https://via.placeholder.com/100"}
-        alt={firstname}
-        className="object-cover w-16 h-16 rounded-full"
-      />
+  src={image}
+  alt={firstname}
+  className="object-cover w-20 h-20 rounded-full border-2 border-blue-500"
+/>
 
       <div>
         <h2 className="text-lg font-bold">
@@ -77,7 +77,7 @@ const handleDelete = async (id) => {
 
         <p className="text-gray-500">{email}</p>
 
-        <p className="text-sm font-medium text-blue-600">
+        <p className="font-medium text-blue-600">
           {job}
         </p>
       </div>

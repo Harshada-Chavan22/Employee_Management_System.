@@ -6,13 +6,14 @@ const Dashboard = () => {
   const [employeeId, setEmployeeId] = useState("");
 
   return (
-    <div className="flex bg-gray-100">
-      <LeftBar employeeId={employeeId} />
-      <div className="flex-1">
-        <MainSection setEmployeeId={setEmployeeId} />
-      </div>
+  <div className="flex min-h-screen bg-gray-100">
+    <LeftBar employeeId={employeeId} />
+
+    <div className="flex-1">
+      <MainSection setEmployeeId={setEmployeeId} />
     </div>
-  );
+  </div>
+);
 };
 
 export default Dashboard;
